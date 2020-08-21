@@ -1,0 +1,22 @@
+{% extends 'base_generic.html' %}
+
+{% block content %}
+<div class="wrapper fadeInDown">
+  <div id="formContent">
+      <form method="post">
+        {% csrf_token %}
+        <p>
+          <label id="login" class="fadeIn second" name="login" placeholder="login"></label>
+          {{ form.username }}
+        </p>
+        <p>
+          <label id="password" class="fadeIn third" name="login" placeholder="password"></label>
+          {{ form.password }}
+        </p>
+
+        <input id="sub" type="submit" class="fadeIn fourth" value="Log In">
+      </form>
+  <a href="../signup" >sign up<a>
+  </div>
+</div>
+{% endblock %}

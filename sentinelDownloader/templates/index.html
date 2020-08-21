@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html>
+<div>
+    {% load static %}
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Sentinel Eye</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="{% static "css/css.css" %}"/>
+    <link rel="stylesheet" href="{% static "css/draw.css" %}"/>
+    <link rel="shortcut icon" type="image/x-icon" href="{% static "images/sentinel.ico" %}"/>
+
+    <!--<link rel="stylesheet" href="css/draw.css"/>-->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.4.0/dist/leaflet.css"
+          integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA=="
+          crossorigin=""/>
+    <!--<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+          crossorigin="anonymous">-->
+    <!--        <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>-->
+    <!--<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+            integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+            crossorigin="anonymous"></script>-->
+    <script src="https://unpkg.com/leaflet@1.4.0/dist/leaflet.js"
+            integrity="sha512-QVftwZFqvtRNi0ZyCtsznlKSWOStnDORoefr1enyq5mVL4tmKB3S/EnC3rRJcxCPavG10IcrVGSmPh6Qw5lwrg=="
+            crossorigin=""></script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/0.4.2/leaflet.draw.css"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/0.4.2/leaflet.draw.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+
+
+    <link rel="apple-touch-icon" href="apple-touch-icon.png">
+
+    <link rel="stylesheet" href="{% static "css/bootstrap.min.css" %}">
+    <link rel="stylesheet" href="{% static "css/bootstrap-theme.min.css" %}">
+    <link rel="stylesheet" href="{% static "css/fontAwesome.css" %}">
+    <link rel="stylesheet" href="{% static "css/light-box.css" %}">
+    <link rel="stylesheet" href="{% static "css/owl-carousel.css" %}">
+    <link rel="stylesheet" href="{% static "css/templatemo-style.css" %}">
+
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800" rel="stylesheet">
+
+    <script src="{% static "js/vendor/modernizr-2.8.3-respond-1.4.2.min.js" %}"></script>
+
+    </head>
+
+    <body>
+    {% if user.is_authenticated %}
+        <header class="nav-down responsive-nav hidden-lg hidden-md">
+            <button type="button" id="nav-toggle" class="navbar-toggle" data-toggle="collapse" data-target="#main-nav">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <!--/.navbar-header-->
+            <div id="main-nav" class="collapse navbar-collapse">
+                <nav>
+                    <ul class="nav navbar-nav">
+                        <li><a href="#top">Home</a></li>
+                        <li><a href="#draw-map">Map</a></li>
+                        <!--<li><a href="#upload-geojson">Upload File</a></li>-->
+                        <li><a href="#about">About Project</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </header>
+
+        <div class="sidebar-navigation hidde-sm hidden-xs">
+            <!--  Hi {{ user.username }}!
+            <p><a href="{% url 'logout' %}">logout</a></p> -->
+            <div class="logo">
+                <a href="#">Sentinel<em>Eye</em></a>
+            </div>
+
+
+            <nav>
+                <ul>
+                    <li>
+                        <a href="#top">
+                            <span class="rect"></span>
+                            <span class="circle"></span>
+                            Home
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#draw-map">
+                            <span class="rect"></span>
+                            <span class="circle"></span>
+                            Map
+                        </a>
+                    </li>
+                    <!--<li>
+                        <a href="#upload-geojson">
+                            <span class="rect"></span>
+                            <span class="circle"></span>
+                            Upload File
+                        </a>
+                    </li>-->
+                    <li>
+                        <a href="#about-project">
+                            <span class="rect"></span>
+                            <span class="circle"></span>
+                            About Project
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+            <ul class="social-icons">
+                <li><a href="http://facebook.com/Intetics/" target="_blank"><i class="fa fa-facebook"></i></a></li>
+                <li><a href="http://twitter.com/intetics" target="_blank"><i class="fa fa-twitter"></i></a></li>
+                <li><a href="http://linkedin.com/company/intetics" target="_blank"><i class="fa fa-linkedin"></i></a>
+                </li>
+                <!--<li><a href="#"><i class="fa fa-rss"></i></a></li>
+                <li><a href="#"><i class="fa fa-behance"></i></a></li>-->
+            </ul>
+        </div>
+
+        <div class="slider">
+            <div class="Modern-Slider content-section" id="top">
+                <!-- Item -->
+
+                <div class="item item-1">
+                    <div class="img-fill">
+                        <div class="image"></div>
+                        <div class="info">
+                            <div id="logout"><a href="{% url 'logout' %}" class="btn btn-info btn-lg" data-type="button"
+                                                class="ms-layer">
+                                <span class="glyphicon glyphicon-log-out"></span> Log out
+                            </a></div>
+                            <div>
+                                <h1>Sentinel Eye</h1>
+                                <p>The Copernicus Open Access Hub
+                                    <a href="https://scihub.copernicus.eu/" target="_blank">website</a>.<br></p>
+                                <div class="white-button button">
+                                    <a href="#about">Discover More</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- // Item -->
+                <!-- Item -->
+                <div class="item item-2">
+                    <div class="img-fill">
+                        <div class="image">
+                        </div>
+                        <div class="info">
+                            <div id="logout"><a href="{% url 'logout' %}" class="btn btn-info btn-lg" data-type="button"
+                                                class="ms-layer">
+                                <span class="glyphicon glyphicon-log-out"></span> Log out
+                            </a></div>
+                            <div>
+                                <h1>Sentinel Eye</h1>
+                                <p>The Copernicus Open Access Hub
+                                    <a href="https://scihub.copernicus.eu/" target="_blank">website</a>.<br></p>
+                                <div class="white-button button">
+                                    <a href="#featured">Discover More</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- // Item -->
+                <!-- Item -->
+                <div class="item item-3">
+                    <div class="img-fill">
+                        <div class="image"></div>
+                        <div class="info">
+                            <div id="logout"><a href="{% url 'logout' %}" class="btn btn-info btn-lg" data-type="button"
+                                                class="ms-layer">
+                                <span class="glyphicon glyphicon-log-out"></span> Log out
+                            </a></div>
+                            <div>
+                                <h1>Sentinel Eye</h1>
+                                <p>The Copernicus Open Access Hub
+                                    <a href="https://scihub.copernicus.eu/" target="_blank">website</a>.<br></p>
+                                <div class="white-button button">
+                                    <a href="#featured">Discover More</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- // Item -->
+            </div>
+        </div>
+
+
+        <div class="page-content">
+            <section id="draw-map" class="content-section">
+                <div class="section-heading">
+                    <h1>Draw <em>Polygon</em></h1>
+                    <p>Download photos that
+                        <br>contain selected area.</p>
+                </div>
+                <div class="section-content" id="filters">
+                    <div class="container">
+                        <div class="row" style="">
+                            <div class="col-sm-9">
+                                <div id="poly-map"></div>
+                            </div>
+                            <div class="col-sm-3">
+                                <div class="col-sm-12" id="map-dashboard">
+                                    <form id="map-dashboard-form" action='post'>
+                                        {% csrf_token %}
+                                        <div class="form-row">
+                                            <div class="col-md-10 mb-2">
+                                                <label for="from-date">From</label>
+                                                <input type="date" class="form-control" id="from-date" placeholder="">
+                                            </div>
+                                            <div class="col-md-10 mb-2">
+                                                <label for="to-date-inclusive">To</label>
+                                                <input type="date" class="form-control" id="to-date-inclusive"
+                                                       placeholder="">
+                                            </div>
+                                        </div>
+                                        <div class="form-row">
+                                            <div class="col-md-10 mb-2">
+                                                <label for="cloud-cover">Cloud Cover</label>
+                                                <input type="range" value="0" min="0" max="100" id="cloud-cover"
+                                                       name="i_cloud_cover"/><span id="cloud-cover-value">0</span></div>
+                                        </div>
+                                </div>
+
+                                <div class="col-sm-12">
+                                    <div class="row">
+                                        <form id="upload-container" method="POST">
+                                            {% csrf_token %}
+                                            <div>
+                                                <input id="file-input" type="file" accept=".geojson" name="geojson">
+                                                <label for="file-input">Drop file</label>
+                                                <input type="submit" class="btn btn-primary get_geo" id="get_geo"
+                                                       value="Sent">
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <script src="{% static "js/map.js" %}"></script>
+                                </div>
+                            </div>
+
+
+                        </div>
+                        <div class="row pull-left">
+                            <button style="top: -10px" class="btn btn-warning reset">Reset</button>
+                            <button class="cancel-map btn btn-secondary">Cancel</button>
+                            <input type="submit" id="sub" value="Submit"><!--class="btn btn-primary"-->
+                        </div>
+                        </form>
+                    </div>
+                </div>
+            </section>
+
+            <section id="about-project" class="about-project-section">
+                <div id="map">
+
+                    <!-- How to change your own map point
+                           1. Go to Google Maps
+                           2. Click on your location point
+                           3. Click "Share" and choose "Embed map" tab
+                           4. Copy only URL and paste it within the src="" field below
+                    -->
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1197183.8373802372!2d-1.9415093691103689!3d6.781986417238027!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xfdb96f349e85efd%3A0xb8d1e0b88af1f0f5!2sKumasi+Central+Market!5e0!3m2!1sen!2sth!4v1532967884907"
+                            width="100%" height="400px" frameborder="0" style="border:0" allowfullscreen></iframe>
+                </div>
+                <div id="about-content">
+                    <div class="section-heading">
+                        <h1>Contact<br><em>Sentinel Eye Team</em></h1>
+                        <p>Curabitur hendrerit mauris mollis ipsum vulputate rutrum.
+                            <br>Phasellus luctus odio eget dui imperdiet.</p>
+
+                    </div>
+                    <div class="section-content">
+                        <form id="about" action="#" method="post">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <fieldset>
+                                        <input name="name" type="text" class="form-control" id="name"
+                                               placeholder="Your name..." required="">
+                                    </fieldset>
+                                </div>
+                                <div class="col-md-4">
+                                    <fieldset>
+                                        <input name="email" type="email" class="form-control" id="email"
+                                               placeholder="Your email..." required="">
+                                    </fieldset>
+                                </div>
+                                <div class="col-md-4">
+                                    <fieldset>
+                                        <input name="subject" type="text" class="form-control" id="subject"
+                                               placeholder="Subject..." required="">
+                                    </fieldset>
+                                </div>
+                                <div class="col-md-12">
+                                    <fieldset>
+                                        <textarea name="message" rows="6" class="form-control" id="message"
+                                                  placeholder="Your message..." required=""></textarea>
+                                    </fieldset>
+                                </div>
+                                <div class="col-md-12">
+                                    <fieldset>
+                                        <button type="submit" id="form-submit" class="btn">Send Message Now</button>
+                                    </fieldset>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </section>
+            <section class="footer">
+                <p>Copyright &copy; 2018.</p>
+            </section>
+        </div>
+        <div style="display: none;" class="pop-outer">
+            <div class="pop-inner">
+                <button class="close btn btn-danger">X</button>
+                <table id="table_id">
+                    <thead>
+                    <tr>
+                        <th>Links</th>
+                        <th>ID</th>
+                    </tr>
+                    </thead>
+                    <tbody id="date">
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <script src="{% static "js/map.js" %}"></script>
+        <script src="{% static "js/app.js" %}"></script>
+        <script src="{% static "js/d_t.js" %}"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+        <script src="{% static "js/vendor/bootstrap.min.js" %}"></script>
+
+        <script src="{% static "js/plugins.js" %}"></script>
+        <script src="{% static "js/main.js" %}"></script>
+
+        <script>
+            // Hide Header on on scroll down
+            var didScroll;
+            var lastScrollTop = 0;
+            var delta = 5;
+            var navbarHeight = $('header').outerHeight();
+
+            $(window).scroll(function (event) {
+                didScroll = true;
+            });
+
+            setInterval(function () {
+                if (didScroll) {
+                    hasScrolled();
+                    didScroll = false;
+                }
+            }, 250);
+
+            function hasScrolled() {
+                var st = $(this).scrollTop();
+
+                // Make sure they scroll more than delta
+                if (Math.abs(lastScrollTop - st) <= delta)
+                    return;
+
+                // If they scrolled down and are past the navbar, add class .nav-up.
+                // This is necessary so you never see what is "behind" the navbar.
+                if (st > lastScrollTop && st > navbarHeight) {
+                    // Scroll Down
+                    $('header').removeClass('nav-down').addClass('nav-up');
+                } else {
+                    // Scroll Up
+                    if (st + $(window).height() < $(document).height()) {
+                        $('header').removeClass('nav-up').addClass('nav-down');
+                    }
+                }
+
+                lastScrollTop = st;
+            }
+        </script>
+
+
+    {% else %}
+        <div style="position: absolute; height: 100%; width: 100%; background-color: #56baed;">
+            <div style="position: absolute; top: 40%; left: 35%; height: 20%; width: 30%; border-radius: 20px; background-color: #f0a22e">
+                <div style="text-align: center; font-size: 150%">
+                    <p>You are not logged in</p>
+                    <a href="{% url 'login' %}">Login</a>
+                    <br>
+                    <a href="../signup">Sign up</a>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+    </body>
+</html>

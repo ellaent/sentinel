@@ -1,0 +1,11 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+<p>HELLO</p>
+{% for url in urls %}
+    <br>
+    <a href="{{ url }}">{{ url }}</a>
+{% empty %}
+    <p>Sorry, no url in this list!</p>
+{% endfor %}
+{% endblock %}

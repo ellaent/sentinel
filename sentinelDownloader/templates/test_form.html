@@ -1,0 +1,12 @@
+{% extends "base_generic.html" %}
+{% block content %}
+
+    <form action="download" method="get">
+        <input type="date" name="date_lower">
+        <input type="date" name="date_upper">
+        <input type="float" name = "cloud_lower">
+        <input type="float" name = "cloud_upper">
+        <input type="submit" value="Submit"/>
+    </form>
+
+{% endblock %}

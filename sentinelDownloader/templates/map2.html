@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <title>Quick Start - Leaflet</title>
+
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="../sentinelDownloader/media/css/css.css"/>
+    <link rel="stylesheet" href="../sentinelDownloader/media/css/draw.css"/>
+
+    <link rel="shortcut icon" type="image/x-icon" href="docs/images/favicon.ico" />
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.4.0/dist/leaflet.css"
+          integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA=="
+          crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.4.0/dist/leaflet.js"
+            integrity="sha512-QVftwZFqvtRNi0ZyCtsznlKSWOStnDORoefr1enyq5mVL4tmKB3S/EnC3rRJcxCPavG10IcrVGSmPh6Qw5lwrg=="
+            crossorigin=""></script>
+    <script src="../sentinelDownloader/media/js/Leaflet.draw.js"></script>
+
+
+
+</head>
+<body>
+<div id="date">
+    Start Date:
+    <input type="date" id="start"  >
+</div>
+<div>
+    Finish Date:
+    <input type="date" id="finish" min="05.05.2019"  max="07.05.2019" >
+</div>
+<div class="cloud">
+    <form>
+        <label>
+            <input type="range" min="0" max="100" value="0">
+            <input type="number" readonly >
+        </label>
+    </form>
+</div>
+
+
+
+
+
+
+<div id="map" style="width: 600px; height: 400px;">
+</div>
+<div id="button">
+    <button style="width: 70px; height: 20px;" >Reset</button>
+</div>
+
+
+
+
+
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script>
+    // center of the map
+let center = [51.505, -0.09];
+
+// Create the map
+let map = L.map('map').setView(center, 13);
+
+// Set up the OSM layer
+L.tileLayer(
+  'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: 'Data © <a href="http://osm.org/copyright">OpenStreetMap</a>',
+    maxZoom: 18
+  }).addTo(map);
+
+// add a marker in the given location
+L.marker(center).addTo(map);
+
+// Initialise the FeatureGroup to store editable layers
+var editableLayers = new L.FeatureGroup();
+map.addLayer(editableLayers);
+
+var drawPluginOptions = {
+  position: 'topright',
+  draw: {
+    rectangle: {
+      allowIntersection: false, // Restricts shapes to simple polygons
+      drawError: {
+        color: '#e1e100', // Color the shape will turn when intersects
+        message: '<strong>Oh snap!<strong> you can\'t draw that!' // Message that will show when intersect
+      },
+      shapeOptions: {
+        color: '#97009c'
+      }
+    },
+    // disable toolbar item by setting it to false
+    polyline: false,
+    circle: false, // Turns off this drawing tool
+    polygon: false,
+    marker: false,
+    },
+  edit: {
+    featureGroup: editableLayers, //REQUIRED!!
+    remove: false
+  }
+};
+
+// Initialise the draw control and pass it the FeatureGroup of editable layers
+var drawControl = new L.Control.Draw(drawPluginOptions);
+map.addControl(drawControl);
+
+
+var editableLayers = new L.FeatureGroup();
+map.addLayer(editableLayers);
+
+map.on('draw:created', function(e) {
+  var type = e.layerType,
+    layer = e.layer;
+
+  if (type === 'marker') {
+    layer.bindPopup('A popup!');
+  }
+
+	editableLayers.clearLayers();
+
+  editableLayers.addLayer(layer);
+});
+
+</script>
+</body>
+</html>

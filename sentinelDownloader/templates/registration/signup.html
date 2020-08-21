@@ -1,0 +1,31 @@
+{% extends 'base_generic.html' %}
+
+{% block content %}
+<div class="wrapper fadeInDown">
+<div id="formContent">
+ <form method="post" id="register">
+   {% csrf_token %}
+   <p>
+          <label id="login" class="fadeIn second" name="login" placeholder="login"></label>
+          {{ form.username }}
+        </p>
+        <p>
+          <label id="password" class="fadeIn third" name="login" placeholder="password"></label>
+          {{ form.password1 }}
+        </p>
+     <p>
+         confirm password:
+         <br>
+          <label id="password2" class="fadeIn third" name="login" placeholder="confirm password"></label>
+          {{ form.password2 }}
+        </p>
+       {% for error in field.errors %}
+         <p style="color: red">{{ error }}</p>
+       {% endfor %}
+         <input id="sub" type="submit" class="fadeIn fourth" value="Sign Up">
+   <!--<button type="submit">Sign up</button>-->
+ </form>
+<a href="{% url 'login' %}">login</a>
+</div>
+</div>
+{% endblock %}
